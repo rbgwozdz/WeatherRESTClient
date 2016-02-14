@@ -1,0 +1,59 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "06489",
+               "short_name" : "06489",
+               "types" : [ "postal_code" ]
+            },
+            {
+               "long_name" : "Southington",
+               "short_name" : "Southington",
+               "types" : [ "locality", "political" ]
+            },
+            {
+               "long_name" : "Connecticut",
+               "short_name" : "CT",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "United States",
+               "short_name" : "US",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Southington, CT 06489, USA",
+         "geometry" : {
+            "bounds" : {
+               "northeast" : {
+                  "lat" : 41.65455,
+                  "lng" : -72.8161861
+               },
+               "southwest" : {
+                  "lat" : 41.5449131,
+                  "lng" : -72.94004389999999
+               }
+            },
+            "location" : {
+               "lat" : 41.6176069,
+               "lng" : -72.86336349999999
+            },
+            "location_type" : "APPROXIMATE",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 41.65455,
+                  "lng" : -72.8161861
+               },
+               "southwest" : {
+                  "lat" : 41.5449131,
+                  "lng" : -72.94004389999999
+               }
+            }
+         },
+         "place_id" : "ChIJmdmzcQu354kRxUp9xeZIxOg",
+         "types" : [ "postal_code" ]
+      }
+   ],
+   "status" : "OK"
+}

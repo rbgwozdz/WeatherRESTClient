@@ -1,0 +1,12 @@
+{ "drives":
+    [
+	    {"drives_id":"2","ip":"hq10m.backupexample.com","port":"4010","ftp_username":"NameSFTP","
+	     ftp_password":"12345","permission":2,"drive_name":"dev"
+	    ,"drive_letter":"S","size":"1234","ma_mode":"0"
+	    },
+	    {"drives_id":"3","ip":"hq6m.backupexample.com","port":"4206","ftp_username":"userSFTP"
+		,"ftp_password":"456","permission":2,"drive_name":"Rashtesting","drive_letter":"P","size":"8","ma_mode":"0"
+		}
+	],
+	"user_id":"8"
+}

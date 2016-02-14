@@ -1,0 +1,39 @@
+{
+  "coord": {
+    "lon": -72.86,
+    "lat": 41.67
+  },
+  "weather": {
+    "id": 803,
+    "main": "Clouds",
+    "description": "broken clouds",
+    "icon": "04d"
+  },
+  "base": "cmc stations",
+  "main": {
+    "temp": 280.49,
+    "pressure": 1012,
+    "humidity": 77,
+    "temp_min": 279.25,
+    "temp_max": 281.15
+  },
+  "wind": {
+    "speed": 5.1,
+    "deg": 190
+  },
+  "clouds": {
+    "all": 75
+  },
+  "dt": 1453840413,
+  "sys": {
+    "type": 1,
+    "id": 624,
+    "message": 0.011,
+    "country": "US",
+    "sunrise": 1453810121,
+    "sunset": 1453845596
+  },
+  "id": 4840767,
+  "name": "Plainville",
+  "cod": 200
+}
