@@ -8,7 +8,9 @@ import javax.ws.rs.core.Response.StatusType;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.domain.CloudsBean;
 import com.domain.MetricsBean;
+import com.domain.TimingsBean;
 import com.domain.WeatherBean;
 import com.domain.WindBean;
 
@@ -53,12 +55,19 @@ public class RESTMain {
 	public static void process(String s){
 		WeatherBean weatherBean = new WeatherBean();
 		mapWeatherBean(s, weatherBean);
-		//JSONObject obj = new JSONObject(s);
-		//String n = obj.getString("name");
-		//int a = obj.getInt("age");
-		//System.out.println(n + " "); 
-		//JSONObject res = obj.getJSONArray("weather").getJSONObject(0);
-	   //System.out.println(res.getInt("id"));
+		MetricsBean metricsBean = new MetricsBean();
+	    weatherBean.setMetricsBean(mapMetricsBean(s, metricsBean));
+	    WindBean windBean = new WindBean();
+	    weatherBean.setWindBean(mapWindBean(s, windBean));
+	    CloudsBean cloudsdBean = new CloudsBean();
+	    weatherBean.setCloudsBean(mapCloudsBean(s, cloudsdBean));	    
+	    TimingsBean timingsBean = new TimingsBean();
+	    weatherBean.setTimingsBean(mapTimingsBean(s, timingsBean));
+	    
+	    
+	    
+	    System.out.println(weatherBean.getMetricsBean().getTemp());
+
 		 System.out.println(weatherBean.getId());
 		 System.out.println(weatherBean.getMain());
 		 System.out.println(weatherBean.getDescription());
@@ -66,7 +75,7 @@ public class RESTMain {
 		 System.out.println(weatherBean.getCity());
 	}
 	
-	public static void mapWeatherBean(String s, WeatherBean weatherBean){
+	public static WeatherBean mapWeatherBean(String s, WeatherBean weatherBean){
 		JSONObject obj = new JSONObject(s);
 		weatherBean.setCity(obj.getString("name"));
 		JSONObject res = obj.getJSONArray("weather").getJSONObject(0);
@@ -74,16 +83,12 @@ public class RESTMain {
 	    weatherBean.setMain(res.getString("main"));
 	    weatherBean.setDescription(res.getString("description"));
 	    weatherBean.setIcon(res.getString("icon"));
-	    MetricsBean metricsBean = new MetricsBean();
-	    weatherBean.setMetricsBean(mapMetricsBean(s, metricsBean));
-	    WindBean windBean 
-	    System.out.println(metricsBean.getTemp());
+		return weatherBean;
 	}
 	
 	public static MetricsBean mapMetricsBean(String s, MetricsBean metricsBean){
 		JSONObject obj = new JSONObject(s);
 		JSONObject res = obj.getJSONObject("main");
-		System.out.println("temp = [" +res.getInt("temp") + "]");
 		metricsBean.setTemp(res.getInt("temp"));
 		metricsBean.setPressure(res.getInt("pressure"));
 		metricsBean.setHumidity(res.getInt("humidity"));
@@ -96,12 +101,24 @@ public class RESTMain {
 	public static WindBean mapWindBean(String s, WindBean windBean){
 		JSONObject obj = new JSONObject(s);
 		JSONObject res = obj.getJSONObject("wind");
-		System.out.println("speed = [" +res.getInt("speed") + "]");
 		windBean.setSpeed(res.getInt("speed"));
 		windBean.setDeg(res.getInt("deg"));
 		return windBean;
 	}
 	
+	public static CloudsBean mapCloudsBean(String s, CloudsBean cloudsBean){
+		JSONObject obj = new JSONObject(s);
+		JSONObject res = obj.getJSONObject("clouds");
+		cloudsBean.setAll(res.getInt("all"));
+		return cloudsBean;
+	}
+		
+	public static TimingsBean mapTimingsBean(String s, TimingsBean timingsBean){
+		JSONObject obj = new JSONObject(s);
+		JSONObject res = obj.getJSONObject("sys");
+		timingsBean.setSunrise(res.getInt("sunrise"));
+		timingsBean.setSunset(res.getInt("sunset"));
+		return timingsBean;
+	}
 	
-
 }
