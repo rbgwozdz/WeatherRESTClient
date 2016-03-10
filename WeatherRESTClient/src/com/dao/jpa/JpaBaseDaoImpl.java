@@ -7,23 +7,31 @@ import javax.persistence.PersistenceException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaCallback;
+import org.springframework.orm.jpa.JpaTemplate;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
+import org.springframework.stereotype.Repository;
 
 import com.dao.BaseDao;
 
-public class JpaBaseDaoImpl extends JpaDaoSupport implements BaseDao
+@Repository
+public class JpaBaseDaoImpl implements BaseDao
 {
+
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	protected static final Log LOG = LogFactory.getLog(JpaBaseDaoImpl.class);
 
 	@SuppressWarnings("unchecked")
 	public <T> List<T> findAll(Class<T> clazz)
 	{
-		return getJpaTemplate().find("from " + clazz.getSimpleName());
+		return (List<T>) getSessionFactory().openSession().createQuery("from " + clazz.getSimpleName());
 	}
 
-	public List listAll(Class clazz)
+/*	public List listAll(Class clazz)
 	{
 		return getJpaTemplate().find("from " + clazz.getSimpleName());
 	}
@@ -45,32 +53,32 @@ public class JpaBaseDaoImpl extends JpaDaoSupport implements BaseDao
 		LOG.info("merge: " + obj.getClass().getSimpleName());
 		getJpaTemplate().merge(obj);
 	}
-
+*/
 	public Object create(Object obj)
 	{
 		LOG.info("persist: " + obj.getClass().getSimpleName());
-		getJpaTemplate().persist(obj);
+		getSessionFactory().openSession().save(obj);
 		return obj;
 	}
 
-	public void remove(Object o)
+	public void remove(Object obj)
 	{
-		getJpaTemplate().remove(o);
+		getSessionFactory().openSession().delete(obj);
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	public void remove(Class clazz, Long id)
 	{
-		getJpaTemplate().remove(getJpaTemplate().find(clazz, id));
+		getSessionFactory().openSession().delete(clazz.getSimpleName(), id);
 	}
 
 	@SuppressWarnings("unchecked")
 	public void remove(Class clazz, String id)
 	{
-		getJpaTemplate().remove(getJpaTemplate().find(clazz, id));
+		getSessionFactory().openSession().delete(clazz.getSimpleName(), id);
 	}
 
-	public Long count(final Class clazz)
+/*	public Long count(final Class clazz)
 	{
 		return (Long) getJpaTemplate().execute(new JpaCallback()
 		{
@@ -85,4 +93,13 @@ public class JpaBaseDaoImpl extends JpaDaoSupport implements BaseDao
 	{
 		return getJpaTemplate().find("from " + clazz.getSimpleName() + " a ORDER BY a.name ASC");
 	}
+*/	
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
 }

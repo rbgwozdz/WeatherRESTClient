@@ -6,14 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.dao.CloudsDao;
+import com.dao.MetricsDao;
 
 @Repository
-public class JpaCloudsDaoImpl extends JpaBaseDaoImpl implements CloudsDao{
+public class JpaMetricsDaoImpl extends JpaBaseDaoImpl implements MetricsDao{
 
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	public int getCloudsCount(){
+	public int getCloudlCount(){
 		String hql = "SELECT COUNT(*) FROM CloudsDTO";
 		Query query =  getSessionFactory().openSession().createQuery(hql);	
 		return ((Long) query.uniqueResult()).intValue();
