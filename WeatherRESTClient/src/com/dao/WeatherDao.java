@@ -1,5 +1,5 @@
 package com.dao;
 
-public interface WeatherDao {
+public interface WeatherDao extends BaseDao{
 
 }

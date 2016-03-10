@@ -1,5 +1,5 @@
 package com.dao;
 
-public interface MetricsDao {
+public interface MetricsDao extends BaseDao{
 
 }

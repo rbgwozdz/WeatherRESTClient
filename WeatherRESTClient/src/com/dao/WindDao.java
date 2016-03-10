@@ -1,5 +1,5 @@
 package com.dao;
 
-public interface WindDao {
+public interface WindDao extends BaseDao{
 
 }

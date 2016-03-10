@@ -1,5 +1,5 @@
 package com.dao;
 
-public interface TimingsDao {
+public interface TimingsDao extends BaseDao{
 
 }

@@ -1,5 +1,5 @@
 package com.dao;
 
-public interface CloudsDao {
+public interface CloudsDao extends BaseDao{
 
 }
