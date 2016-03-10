@@ -1,13 +1,35 @@
 package com.domain;
 
-public class MetricsBean{
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
+public class MetricsDTO{
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	private long weatherId;
     private int temp;
     private int pressure;
     private int humidity;
     private int tempMin;
     private int tempMax;
     
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public long getWeatherId() {
+		return weatherId;
+	}
+	public void setWeatherId(long weatherId) {
+		this.weatherId = weatherId;
+	}
 	public int getTemp() {
 		return temp;
 	}

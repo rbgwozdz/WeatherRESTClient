@@ -7,12 +7,17 @@ import javax.ws.rs.core.Response.StatusType;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.domain.CloudsBean;
-import com.domain.MetricsBean;
-import com.domain.TimingsBean;
-import com.domain.WeatherBean;
-import com.domain.WindBean;
+import com.bean.CloudsBean;
+import com.bean.MetricsBean;
+import com.bean.TimingsBean;
+import com.bean.WeatherBean;
+import com.bean.WindBean;
+import com.dao.jpa.JpaCloudsDaoImpl;
+import com.domain.CloudsDTO;
+
 
 /**
  * @author Richard
@@ -31,28 +36,34 @@ public class RESTMain {
 	public static final int OK_STATUS = Response.Status.OK.getStatusCode();
 	
 	public static void main(String[] args) {
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+		JpaCloudsDaoImpl dao = ctx.getBean("jpaCloudsDaoImpl", JpaCloudsDaoImpl.class);
+		System.out.println(dao.getCloudsCount());
 		//Call the service and get the response object
 		Response response = ClientBuilder.newClient()
 				.target(REST_URL)
 				.request(MediaType.APPLICATION_JSON)
 				.get();
 		
-		
-		// process the response object
+		WeatherBean wBean = new WeatherBean();
+		//process the response object
 		StatusType status = response.getStatusInfo();
 		int statusCode = status.getStatusCode();
 		if (statusCode == OK_STATUS) {
 			String s = response.readEntity(String.class);
 			System.out.println("s = " + s);
-			process(s);
+			wBean = process(s);
 		} else {
 			System.out.printf("Service returned status: \"%d %s\"\n",
 					statusCode, status.getReasonPhrase());
 		}
+		 CloudsDTO cloudsDTO = new CloudsDTO();
+		 cloudsDTO.setAl(wBean.getCloudsBean().getAl());
+		 dao.create(cloudsDTO);
 		
 	}
 	
-	public static void process(String s){
+	public static WeatherBean process(String s){
 		WeatherBean weatherBean = new WeatherBean();
 		mapWeatherBean(s, weatherBean);
 		MetricsBean metricsBean = new MetricsBean();
@@ -73,6 +84,11 @@ public class RESTMain {
 		 System.out.println(weatherBean.getDescription());
 		 
 		 System.out.println(weatherBean.getCity());
+		return weatherBean;
+		 
+			 
+		 
+		 
 	}
 	
 	public static WeatherBean mapWeatherBean(String s, WeatherBean weatherBean){
@@ -109,7 +125,7 @@ public class RESTMain {
 	public static CloudsBean mapCloudsBean(String s, CloudsBean cloudsBean){
 		JSONObject obj = new JSONObject(s);
 		JSONObject res = obj.getJSONObject("clouds");
-		cloudsBean.setAll(res.getInt("all"));
+		cloudsBean.setAl(res.getInt("all"));
 		return cloudsBean;
 	}
 		
